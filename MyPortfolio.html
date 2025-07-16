@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Megh's Portfolio - Choose Your Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: bold;
+            color: #e50914;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 16px;
+            color: #888;
+        }
+
+        .profiles-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .profiles-title {
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: #fff;
+        }
+
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .profile-card {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 15px;
+            padding: 30px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(229, 9, 20, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .profile-card:hover::before {
+            left: 100%;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-10px);
+            border-color: #e50914;
+            box-shadow: 0 15px 40px rgba(229, 9, 20, 0.3);
+        }
+
+        .profile-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .profile-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .profile-desc {
+            font-size: 14px;
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        .profile-view {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .profile-view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+            background: linear-gradient(135deg, #e50914, #b20710);
+            border-radius: 15px;
+            margin: 0 -20px 40px -20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 10s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-100px); }
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateX(-5px);
+        }
+
+        .profile-title {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #e50914;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 30px;
+            background: #e50914;
+            border-radius: 2px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .content-card {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 10px;
+            padding: 25px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #e50914, #ff6b6b);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .content-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .card-content {
+            font-size: 14px;
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, #e50914, #b20710);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(229, 9, 20, 0.4);
+        }
+
+        .contact-section {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+
+        .contact-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #e50914;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ccc;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item:hover {
+            color: #e50914;
+        }
+
+        @media (max-width: 768px) {
+            .profiles-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 20px;
+            }
+            
+            .logo {
+                font-size: 36px;
+            }
+            
+            .profiles-title {
+                font-size: 24px;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Main Portfolio Selection -->
+        <div id="main-view">
+            <div class="header">
+                <div class="logo">PORTFOLIO</div>
+                <div class="subtitle">Vyas Megh</div>
+                <div class="tagline">Site Reliability Engineer/DevOps & Tech Enthusiast</div>
+            </div>
+
+            <div class="profiles-section">
+                <h2 class="profiles-title">Who's viewing today?</h2>
+                <div class="profiles-grid">
+                    <div class="profile-card" onclick="showProfile('recruiter')">
+                        <div class="profile-icon">👔</div>
+                        <div class="profile-name">Recruiter</div>
+                        <div class="profile-desc">Looking for the perfect candidate? See my professional journey and achievements.</div>
+                    </div>
+                    
+                    <div class="profile-card" onclick="showProfile('developer')">
+                        <div class="profile-icon">👨‍💻</div>
+                        <div class="profile-name">Developer</div>
+                        <div class="profile-desc">Fellow coder? Check out my technical skills, projects, and coding philosophy.</div>
+                    </div>
+                    
+                    <div class="profile-card" onclick="showProfile('stalker')">
+                        <div class="profile-icon">👀</div>
+                        <div class="profile-name">Friends & Family</div>
+                        <div class="profile-desc">Friends and Family? Here's the personal side of my journey!</div>
+                    </div>
+                    
+                    <div class="profile-card" onclick="showProfile('activities')">
+                        <div class="profile-icon">🏆</div>
+                        <div class="profile-name">Activities</div>
+                        <div class="profile-desc">Discover my extracurricular achievements and campus involvement.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recruiter Profile -->
+        <div id="recruiter-view" class="profile-view">
+            <div class="profile-header">
+                <button class="back-btn" onclick="showMain()">← Back to Profiles</button>
+                <div class="profile-title">Professional Overview</div>
+                <div class="profile-subtitle">Ready to make an impact at your organization</div>
+            </div>
+
+            <div class="content-section">
+                <h3 class="section-title">Work Experience</h3>
+                <div class="content-grid">                    
+                    <div class="content-card">
+                        <div class="card-title">Salesforce Developer/Administrator Intern</div>
+                        <div class="card-content">
+                            <strong>Codiot Technologies | June 2025 - July 2025</strong><br>
+                            Completed a hands-on Salesforce Admin and Developer internship, gaining real-world experience in custom app development, Apex, and Lightning Web Components.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h3 class="section-title">Key Achievements</h3>
+                <div class="content-grid">
+                    <div class="content-card">
+                        <div class="card-title">Performance Optimization</div>
+                        <div class="card-content">
+                            Optimized application performance resulting in 40% faster load times and improved user satisfaction scores by 25%.
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <div class="card-title">Team Leadership</div>
+                        <div class="card-content">
+                            During internship I was able to demonstrate strong collaborative skills and ability to deliver results under tight deadlines.
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <div class="card-title">Technical Innovation</div>
+                        <div class="card-content">
+                            Implemented modern DevOps practices, reducing deployment time from 2 hours to 15 minutes and improving system reliability.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h3 class="section-title">Technical Skills</h3>
+                <div class="content-card">
+                    <div class="card-title">Core Technologies</div>
+                    <div class="skills-list">
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">Postman</span>
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">CI/CD</span>    
+                        <span class="skill-tag">Salesforce</span>
+                        <span class="skill-tag">Apex</span>
+                        <span class="skill-tag">Lightning Web Components</span>
+                        <span class="skill-tag">Terraform</span>
+                        <span class="skill-tag">Kubernetes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Developer Profile -->
+        <div id="developer-view" class="profile-view">
+            <div class="profile-header">
+                <button class="back-btn" onclick="showMain()">← Back to Profiles</button>
+                <div class="profile-title">Technical Deep Dive</div>
+                <div class="profile-subtitle">Code, Create, Innovate</div>
+            </div>
+
+            <div class="content-section">
+                <h3 class="section-title">Featured Projects</h3>
+                <div class="content-grid">
+                    <div class="content-card">
+                        <div class="card-title">E-Commerce Platform</div>
+                        <div class="card-content">
+                            Full-stack e-commerce solution with React, Node.js, and Stripe integration. Features include real-time inventory, user authentication, and admin dashboard.
+                            <div class="skills-list">
+                                <span class="skill-tag">React</span>
+                                <span class="skill-tag">Node.js</span>
+                                <span class="skill-tag">MongoDB</span>
+                                <span class="skill-tag">Stripe API</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <div class="card-title">Task Management App</div>
+                        <div class="card-content">
+                            Collaborative task management tool with real-time updates using WebSockets. Includes drag-and-drop functionality and team collaboration features.
+                            <div class="skills-list">
+                                <span class="skill-tag">Vue.js</span>
+                                <span class="skill-tag">Socket.io</span>
+                                <span class="skill-tag">Express</span>
+                                <span class="skill-tag">PostgreSQL</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <div class="card-title">API Gateway</div>
+                        <div class="card-content">
+                            Microservices API gateway with rate limiting, authentication, and monitoring. Handles 10k+ requests per minute with 99.9% uptime.
+                            <div class="skills-list">
+                                <span class="skill-tag">Node.js</span>
+                                <span class="skill-tag">Redis</span>
+                                <span class="skill-tag">Docker</span>
+                                <span class="skill-tag">AWS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h3 class="section-title">Technical Expertise</h3>
+                <div class="content-grid">
+                    <div class="content-card">
+                        <div class="card-title">Frontend Development</div>
+                        <div class="card-content">
+                            Skilled in modern JavaScript frameworks and libraries. Focused on creating responsive, performant user interfaces with excellent UX.
+                            <div class="skills-list">
+                                <span class="skill-tag">React</span>
+                                <span class="skill-tag">Vue.js</span>
+                                <span class="skill-tag">TypeScript</span>
+                                <span class="skill-tag">Tailwind CSS</span>
+                                <span class="skill-tag">Next.js</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <div class="card-title">Backend Development</div>
+                        <div class="card-content">
+                            Strong foundation in server-side development, API design, and database management. Experience with both SQL and NoSQL databases.
+                            <div class="skills-list">
+                                <span class="skill-tag">Node.js</span>
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">Express</span>
+                                <span class="skill-tag">Django</span>
+                                <span class="skill-tag">PostgreSQL</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <div class="card-title">DevOps & Cloud</div>
+                        <div class="card-content">
+                            Familiar with cloud platforms and containerization. Experience with CI/CD pipelines and infrastructure as code through academic projects.
+                            <div class="skills-list">
+                                <span class="skill-tag">AWS</span>
+                                <span class="skill-tag">Docker</span>
+                                <span class="skill-tag">Kubernetes</span>
+                                <span class="skill-tag">Jenkins</span>
+                                <span class="skill-tag">Terraform</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Friends & Family Profile -->
+        <div id="stalker-view" class="profile-view">
+            <div class="profile-header">
+                <button class="back-btn" onclick="showMain()">← Back to Profiles</button>
+                <div class="profile-title">Hey there! 👋</div>
+                <div class="profile-subtitle">The personal side of my journey</div>
+            </div>
+
+            <div class="content-section">
+                <h3 class="section-title">About Me</h3>
+                <div class="content-grid">
+                    <div class="content-card">
+                        <div class="card-title">Who Am I?</div>
+                        <div class="card-content">
+                            I'm Megh Vyas, a BCA student and tech enthusiast who loves turning ideas into reality through code. When I'm not debugging or working on projects, you'll find me exploring new technologies and experimenting with cool frameworks.
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <div class="card-title">My Journey</div>
+                        <div class="card-content">
+                            Started as a curious student fascinated by how websites work, and now I'm building scalable applications during my studies. It's been an incredible journey of constant learning and growth through college.
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <div class="card-title">Fun Facts</div>
+                        <div class="card-content">
+                            ☕ Coffee addict who can debug better after the second cup<br>
+                            🎮 Gaming enthusiast (ask me about my favorite indie games)<br>
+                            📚 Always reading tech blogs and trying new frameworks<br>
+                            🎵 Coding playlist includes everything from Rahet Fateh Ali Khan to Central Cee
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h3 class="section-title">My Interests</h3>
+                <div class="content-grid">
+                    <div class="content-card">
+                        <div class="card-title">Technology & Innovation</div>
+                        <div class="card-content">
+                            Always excited about emerging technologies like AI, blockchain, and cloud computing. I love experimenting with new tools and sharing my discoveries with classmates.
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <div class="card-title">Community & Learning</div>
+                        <div class="card-content">
+                            Passionate about collaborative learning and helping fellow students. I regularly participate in coding bootcamps, study groups, and contribute to open-source projects.
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <div class="card-title">Personal Projects</div>
+                        <div class="card-content">
+                            I love building cool side projects - from productivity apps to fun games. Currently working on a Facial Payment Authentication System.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activities Profile -->
+        <div id="activities-view" class="profile-view">
+            <div class="profile-header">
+                <button class="back-btn" onclick="showMain()">← Back to Profiles</button>
+                <div class="profile-title">Beyond the Code</div>
+                <div class="profile-subtitle">Campus involvement and achievements</div>
+            </div>
+
+            <div class="content-section">
+                <h3 class="section-title">Extracurricular Activities</h3>
+                <div class="content-grid">
+                    <div class="content-card">
+                        <div class="card-title">Associate CSO (Sponsorship Officer)</div>
+                        <div class="card-content">
+                            <strong>Kanyathon-2024, IFIM College</strong><br>
+                            Organized a successful charity run, raising over ₹65,000 for local charities. Managed sponsorships and partnerships, enhancing community engagement and demonstrating strong leadership skills.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h3 class="section-title">Leadership Skills</h3>
+                <div class="content-grid">
+                    <div class="content-card">
+                        <div class="card-title">Event Management</div>
+                        <div class="card-content">
+                            Successfully coordinated large-scale campus events, managing teams, budgets, and logistics. Developed strong organizational and communication skills through hands-on experience.
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <div class="card-title">Fundraising & Partnerships</div>
+                        <div class="card-content">
+                            Secured multiple sponsorships and partnerships for college events, demonstrating negotiation skills and ability to build lasting professional relationships.
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <div class="card-title">Community Impact</div>
+                        <div class="card-content">
+                            Passionate about giving back to the community through organized charity events and social initiatives, showcasing commitment to social responsibility.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <h3 class="contact-title">Let's Connect</h3>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>📧</span>
+                    <span>megh.vyas@yahoo.com</span>
+                </div>
+                <div class="contact-item">
+                    <span>📱</span>
+                    <span>+91 8866548854</span>
+                </div>
+                <div class="contact-item">
+                    <span>💼</span>
+                    <span>linkedin.com/in/megh-vyas</span>
+                </div>
+                <div class="contact-item">
+                    <span>🐙</span>
+                    <span>github.com/MeghVyas3132</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showProfile(profileType) {
+            // Hide main view
+            document.getElementById('main-view').style.display = 'none';
+            
+            // Hide all profile views
+            const profileViews = document.querySelectorAll('.profile-view');
+            profileViews.forEach(view => {
+                view.classList.remove('active');
+            });
+            
+            // Show selected profile
+            const selectedView = document.getElementById(profileType + '-view');
+            if (selectedView) {
+                selectedView.classList.add('active');
+            }
+            
+            // Smooth scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showMain() {
+            // Hide all profile views
+            const profileViews = document.querySelectorAll('.profile-view');
+            profileViews.forEach(view => {
+                view.classList.remove('active');
+            });
+            
+            // Show main view
+            document.getElementById('main-view').style.display = 'block';
+            
+            // Smooth scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Add interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to cards
+            const cards = document.querySelectorAll('.content-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Add click effects to profile cards
+            const profileCards = document.querySelectorAll('.profile-card');
+            profileCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Add a brief animation
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'translateY(-10px)';
+                    }, 100);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
